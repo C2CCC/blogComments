@@ -5,7 +5,7 @@ var router = express.Router();
 /* handle comments */
 router.post('/', function(req, res, next) {
   Mongoose.open(function(){
-    
+    var schema = mongoose.
   });
 });
 
