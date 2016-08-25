@@ -7,5 +7,16 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <form action="/comments" method="post">
+        <input class="hidden" type="text" name="title" value="test">
+        <input class="hidden" type="text" name="date" value="2016-08-26">
+        <input class="hidden" type="text" name="id" value="000002">
+        <textarea name="content" placeholder="留下你的见解"></textarea>
+        <input type="text" name="name" placeholder="姓名（必填）">
+        <input type="text" name="mail" placeholder="电邮（必填）">
+        <input type="text" name="site" placeholder="网址">
+        <label><input type="checkbox" name="remember">记住信息？</label>
+        <button type="submit">必有高论</button>
+    </form>
   </body>
 </html>

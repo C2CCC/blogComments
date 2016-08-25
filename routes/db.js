@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 
 var Mongoose = function(){
   this.mongoose = mongoose;
-  this.db = mongoose.connection;
   this.schema = mongoose.Schema({
         title: String,
         date: Date,
@@ -13,17 +12,25 @@ var Mongoose = function(){
         site: String
     });
   this.Model = this.mongoose.model('comments', this.schema);
+  this.init();
 };
 
 Mongoose.prototype = {
+  init: function(){
+    this.connect();
+  },
+
   connect: function(){
-    mongoose.connect('mongodb://localhost/blog-comments');
+    this.connection = mongoose.createConnection('mongodb://localhost/blog-comments');
+  },
+
+  disconnect: function(){
+    this.connection.close();
   },
 
   open: function(cb){
-    this.connect();
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', cb);
+    this.connection.on('error', console.error.bind(console, 'connection error:'));
+    this.connection.once('open', cb);
   }
 };
 
