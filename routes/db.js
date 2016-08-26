@@ -11,17 +11,23 @@ var Mongoose = function(){
         email: String,
         site: String
     });
+  this.counterSchema = mongoose.Schema({
+    _id: String,
+    seq: Number
+  }); 
   this.Model = this.mongoose.model('comments', this.schema);
+  this.Counters = this.mongoose.model('counters', this.counterSchema);
   this.init();
 };
 
 Mongoose.prototype = {
   init: function(){
-    this.connect();
   },
 
   connect: function(){
-    this.connection = mongoose.createConnection('mongodb://localhost/blog-comments');
+    mongoose.Promise = global.Promise;
+    this.mongoose.connect('mongodb://localhost/blog-comments');
+    this.connection = mongoose.connection;
   },
 
   disconnect: function(){
@@ -31,6 +37,19 @@ Mongoose.prototype = {
   open: function(cb){
     this.connection.on('error', console.error.bind(console, 'connection error:'));
     this.connection.once('open', cb);
+  },
+
+  getNextSequence: function(name){
+    var self = this;
+    return new Promise(function(resolve, reject){
+      self.Counters.findByIdAndUpdate(name, { $inc: { seq: 1 } }, { new: true, upsert: true }, function(err, model){
+        if(err){
+          reject(err);
+        }else{
+          resolve(model);
+        }
+      });
+    });    
   }
 };
 
