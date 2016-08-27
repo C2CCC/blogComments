@@ -15,8 +15,14 @@ var Mongoose = function(){
     _id: String,
     seq: Number
   }); 
-  this.Model = this.mongoose.model('comments', this.schema);
-  this.Counters = this.mongoose.model('counters', this.counterSchema);
+  this.feedbackSchema = mongoose.Schema({
+    _id: String,
+    diao: Number,
+    mengbi: Number
+  });
+  this.Model = this.mongoose.model('comments', this.schema, 'comments');
+  this.Counters = this.mongoose.model('counters', this.counterSchema, 'counters');
+  this.Feedback = this.mongoose.model('feedback', this.feedbackSchema, 'feedback');
   this.init();
 };
 
@@ -39,10 +45,14 @@ Mongoose.prototype = {
     this.connection.once('open', cb);
   },
 
-  getNextSequence: function(name){
+  getNextSequence: function(_id, collection, seqName){
     var self = this;
     return new Promise(function(resolve, reject){
-      self.Counters.findByIdAndUpdate(name, { $inc: { seq: 1 } }, { new: true, upsert: true }, function(err, model){
+      var incObj = {};
+      incObj[seqName] = 1;
+      var update = { $inc: incObj };
+      self[collection].findByIdAndUpdate(_id, update, { new: true, upsert: true }, function(err, model){
+        console.log(model);
         if(err){
           reject(err);
         }else{
