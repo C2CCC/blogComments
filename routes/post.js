@@ -92,6 +92,7 @@ function addComment(p, res){
       doc.save(function(){
         // db.disconnect();
       });
+      console.log(model.seq);
       ret['success'] = true;
       ret['data'] = {date: p.date, id: model.seq};
       res.json(ret);
@@ -116,6 +117,7 @@ function getComments(p, res){
       }else{
         ret['success'] = true;
         ret['data'] = docs;
+        console.log(ret);
         res.json(ret);
         // db.disconnect();
       }
