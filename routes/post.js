@@ -29,7 +29,6 @@ router.post('/comments/addComment', function(req, res, next) {
 
 router.get('/comments/getComments', function(req, res, next){
   var reqParam = {title: req.query.title};
-  console.log(reqParam);
 
   if(!db.connection){
     db.connect();
@@ -108,7 +107,8 @@ function addComment(p, res){
 }
 
 function getComments(p, res){
-  db.Model.find({title:p.title}, 'date id content name site', function(err, docs){
+  var query = {title: p.title};
+  db.Model.find(query, 'date id content name site', function(err, docs){
       var ret = {};
       if(err){
         ret['success'] = false;
