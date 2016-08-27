@@ -28,7 +28,8 @@ router.post('/comments/addComment', function(req, res, next) {
 });
 
 router.get('/comments/getComments', function(req, res, next){
-  var reqParam = {title : req.query.title};
+  var reqParam = {title: req.query.title};
+  console.log(reqParam);
 
   if(!db.connection){
     db.connect();
@@ -117,7 +118,6 @@ function getComments(p, res){
       }else{
         ret['success'] = true;
         ret['data'] = docs;
-        console.log(ret);
         res.json(ret);
         // db.disconnect();
       }
