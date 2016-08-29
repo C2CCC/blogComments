@@ -1,7 +1,9 @@
 var express = require('express');
 var Mongoose = require('./db');
+var Mailer = require('./mail');
 var router = express.Router();
 var db = new Mongoose();
+var mailer = new Mailer();
 
 /* handle comments */
 router.post('/comments/addComment', function(req, res, next) {
@@ -14,7 +16,8 @@ router.post('/comments/addComment', function(req, res, next) {
       content : req.body.content,
       name : req.body.name,
       email : req.body.email,
-      site : req.body.site || null
+      site : req.body.site || null,
+      url: req.body.url
     };
   
   if(!db.connection){
@@ -25,6 +28,9 @@ router.post('/comments/addComment', function(req, res, next) {
   }else{
     addComment(reqParam, res);
   }
+
+  mailer.setContent('<p>You\'ve got a new comment to '+ reqParam.title +'</p><p>Writing content:</p><p>'+ reqParam.content +'</p><p>Click <a href="'+ reqParam.url +'">here</a> to the post</p>');
+  mailer.sendMail();
 });
 
 router.get('/comments/getComments', function(req, res, next){
