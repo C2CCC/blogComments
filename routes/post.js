@@ -29,7 +29,7 @@ router.post('/comments/addComment', function(req, res, next) {
     addComment(reqParam, res);
   }
 
-  mailer.setContent('<p>You\'ve got a new comment to '+ reqParam.title +'</p><p>Writing content:</p><p>'+ reqParam.content +'</p><p>Click <a href="'+ reqParam.url +'">here</a> to the post</p>');
+  mailer.setContent('<p>You\'ve got a new comment to '+ reqParam.title +'</p><p>Writing content:</p><p>'+ reqParam.content +'</p><p>Click <a href="http://c2ccc.space'+ reqParam.url +'">here</a> to the post</p>');
   mailer.sendMail();
 });
 
