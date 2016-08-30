@@ -1,9 +1,9 @@
 var nodemailer = require('nodemailer');
 
 var Mailer = function(){
-  this.transport = nodemailer.createTransport('smtps://c2ccc_blogNotifier%40163.com:BlogblogBlog163@smtp.163.com');
+  this.transport = nodemailer.createTransport('smtp://notifier%40c2ccc.space:@127.0.0.1:25');
   this.mailOptions = {
-    from: 'c2ccc_blognotifier<c2ccc_blognotifier@163.com>',
+    from: 'c2ccc_blognotifier<notifier@c2ccc.space>',
     to: 'azureternite@live.com',
     subject: 'You\'ve got new comment'
   };
