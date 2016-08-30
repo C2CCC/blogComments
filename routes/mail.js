@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer');
 
 var Mailer = function(){
-  this.transport = nodemailer.createTransport('smtp://notifier%40c2ccc.space:@127.0.0.1:25');
+  this.transport = nodemailer.createTransport('smtp://@127.0.0.1:25');
   this.mailOptions = {
     from: 'c2ccc_blognotifier<notifier@c2ccc.space>',
     to: 'azureternite@live.com',
